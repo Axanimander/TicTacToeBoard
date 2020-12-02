@@ -1,6 +1,8 @@
 
 [![Build Status](https://travis-ci.com/Axanimander/TicTacToeBoard.svg?branch=master)](https://travis-ci.com/Axanimander/TicTacToeBoard)
 
+[![Coverage Status](https://coveralls.io/repos/github/Axanimander/TicTacToeBoard/badge.svg?branch=master)](https://coveralls.io/github/Axanimander/TicTacToeBoard?branch=master)
+
 # Getting Started
 
 Build the Unit Testing CPP ("gtest") container if you have not already:
