@@ -27,3 +27,9 @@
 *.exe
 *.out
 *.app
+
+# Coveralls
+.gcov
+.gcno
+.gcna
+
