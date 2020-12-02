@@ -29,7 +29,8 @@
 *.app
 
 # Coveralls
-.gcov
-.gcno
-.gcna
+*.gcov
+*.gcno
+*.gcna
+*.gcda
 

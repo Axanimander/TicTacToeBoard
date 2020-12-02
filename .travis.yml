@@ -3,6 +3,7 @@ sudo: enabled
 language: cpp
 
 before_install:
+  - pip install --user cpp-coveralls
   - export CURRENT_PROJ_DIR=$(pwd)
   - mkdir gtest
   - cd gtest
@@ -16,3 +17,4 @@ script:
   - make clean
   - make
   - ./TicTacToeBoardTest
+  - coveralls --exclude *Test.cpp --exclude ${GTEST_DIR} --gcov-options '\-lpbc'

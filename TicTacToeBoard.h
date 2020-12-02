@@ -1,6 +1,6 @@
 #ifndef _TICTACTOEBOARD_H_
 #define _TICTACTOEBOARD_H_
-
+#include <math.h>
 const static int BOARDSIZE = 3;
 
 enum Piece
@@ -8,7 +8,8 @@ enum Piece
     X = 'X',
     O = 'O',
     Invalid = '?',
-    Blank = ' '
+    Blank = ' ',
+    Draw = 'D'
 };
 
 /**
@@ -20,6 +21,9 @@ class TicTacToeBoard
     private:
         Piece board[BOARDSIZE][BOARDSIZE];
         Piece turn;
+        int moveCount;
+        bool gameOver;
+        Piece winner;
 
     public:
         //Constructor sets an empty board and specifies it is X's turn first
@@ -52,7 +56,10 @@ class TicTacToeBoard
          * Returns which Piece has won, if there is a winner, Invalid if the game
          * is not over, or Blank if the board is filled and no one has won.
          **/
-        Piece getWinner();
+        Piece getWinner(int row, int column);
+
+        /** Gets which side won, if no side has won, returns blank, if it's a draw, returns draw **/
+        Piece winningPiece();
 };
 
 #endif

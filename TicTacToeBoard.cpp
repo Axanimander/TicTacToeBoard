@@ -8,6 +8,8 @@
 TicTacToeBoard::TicTacToeBoard()
 {
   turn = X;
+  moveCount = 0;
+  winner = Blank;
   for(int i=0; i<BOARDSIZE; i++)
     for(int j=0; j<BOARDSIZE; j++)
       board[i][j] = Blank;
@@ -19,7 +21,13 @@ TicTacToeBoard::TicTacToeBoard()
 **/
 Piece TicTacToeBoard::toggleTurn()
 {
-  return Invalid;
+  if(turn==X){
+    turn=O;
+  }else{
+    turn=X;
+  }
+  moveCount++;
+  return turn;
 }
 
 /**
@@ -33,6 +41,31 @@ Piece TicTacToeBoard::toggleTurn()
 **/ 
 Piece TicTacToeBoard::placePiece(int row, int column)
 {
+  if(gameOver){
+    return turn;
+  }
+  if(row < BOARDSIZE){
+    if(column < BOARDSIZE){
+      if(board[row][column] == Blank){
+        board[row][column] = turn;
+        Piece win = getWinner(row, column);
+        if(win == X){
+          winner = X;
+          gameOver = true;
+        }if(win == O){
+          winner = O;
+          gameOver = true;
+        }if(win == Draw){
+          winner = Draw;
+          gameOver = true;
+        }
+        toggleTurn();
+        return board[row][column];
+      }else{
+        return board[row][column];
+      }
+    }
+  }
   return Invalid;
 }
 
@@ -42,6 +75,11 @@ Piece TicTacToeBoard::placePiece(int row, int column)
 **/
 Piece TicTacToeBoard::getPiece(int row, int column)
 {
+  if(row < BOARDSIZE){
+    if(column < BOARDSIZE){
+      return board[row][column];
+    }
+  }
   return Invalid;
 }
 
@@ -49,7 +87,51 @@ Piece TicTacToeBoard::getPiece(int row, int column)
  * Returns which Piece has won, if there is a winner, Invalid if the game
  * is not over, or Blank if the board is filled and no one has won.
 **/
-Piece TicTacToeBoard::getWinner()
+Piece TicTacToeBoard::getWinner(int row, int column)
 {
-  return Invalid;
+  
+  //check cols
+  for(int i = 0; i <BOARDSIZE; i++){
+    if(board[row][i] != turn)
+        break;
+    if(i == BOARDSIZE-1){
+        return turn;
+    }
+  }
+
+  //check row
+  for(int i = 0; i < BOARDSIZE; i++){
+    if(board[i][column] != turn)
+        break;
+    if(i == BOARDSIZE-1){
+        return turn;
+    }
+  }
+  if(row == column){
+        //we're on a diagonal
+    for(int i = 0; i < BOARDSIZE; i++){
+        if(board[i][i] != turn)
+            break;
+        if(i == BOARDSIZE-1){
+            return turn;
+        }
+    }
+  }
+  if(row + column == BOARDSIZE - 1){
+    for(int i = 0; i < BOARDSIZE; i++){
+        if(board[i][(BOARDSIZE-1)-i] != turn)
+            break;
+        if(i == BOARDSIZE-1){
+            return turn;
+        }
+    }
+    }
+    if(moveCount == (pow(BOARDSIZE, 2) - 1)){
+            return Draw;
+    }
+    return Invalid;
+}
+
+Piece TicTacToeBoard::winningPiece(){
+  return winner;
 }
